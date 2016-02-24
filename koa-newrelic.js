@@ -13,9 +13,13 @@ module.exports = function middlewareFactory(routerInstance, cfg) {
     } catch (err) {
       newrelic.noticeError(err);
     } finally {
-      var str = _(routerInstance.match(this.url.split('?')[0])).
-          pluck('route').pluck('path').join(' ').replace(/\/+/g,'/').slice(1);
-      newrelic[cfg.ctrlFormat ? 'setControllerName' : 'setTransactionName'](str);
+
+      var match = routerInstance.match(this.url.split('?')[0]);
+      if (match) {
+        var str = match.path[0].path.replace(/\/+/g,'/');
+        newrelic[cfg.ctrlFormat ? 'setControllerName' : 'setTransactionName'](str);
+      }
     }
   }
 };
+
