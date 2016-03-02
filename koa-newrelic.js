@@ -15,11 +15,10 @@ module.exports = function middlewareFactory(routerInstance, cfg) {
     } finally {
 
       var match = routerInstance.match(this.url.split('?')[0]);
-      if (match) {
+      if (match && match.path && match.path[0]) {
         var str = match.path[0].path.replace(/\/+/g,'/');
         newrelic[cfg.ctrlFormat ? 'setControllerName' : 'setTransactionName'](str);
       }
     }
   }
 };
-
