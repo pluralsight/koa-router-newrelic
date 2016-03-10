@@ -12,6 +12,7 @@ module.exports = function middlewareFactory(routerInstance, cfg) {
       yield next;
     } catch (err) {
       newrelic.noticeError(err);
+      this.throw(err);
     } finally {
 
       var match = routerInstance.match(this.url.split('?')[0]);
