@@ -11,7 +11,6 @@ module.exports = function middlewareFactory(routerInstance, cfg) {
     try {
       yield next;
     } catch (err) {
-      newrelic.noticeError(err);
       this.throw(err);
     } finally {
 
